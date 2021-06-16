@@ -7,7 +7,7 @@ const App: FC = () => (
   <Router>
     <Route path="/home" component={Home} />
     <Route exact path="/">
-      <Redirect to="/home" />
+      <Redirect to="/home/anyone-short" />
     </Route>
   </Router>
 );

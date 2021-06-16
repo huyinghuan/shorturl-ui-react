@@ -7,6 +7,12 @@
             ],
             "@components/*": [
                 "./components/*"
+            ],
+            "@src/*": [
+                "./*"
+            ],
+            "@store/*": [
+                "./store/*"
             ]
         }
     }

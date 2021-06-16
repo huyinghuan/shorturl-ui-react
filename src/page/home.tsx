@@ -13,28 +13,27 @@ import EditShortPage from "@pages/user/edit-short"
 import AnyoneQueryPage from "@pages/anyone-short"
 
 
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useLocation } from 'react-router-dom';
 
 
 import "./home.scss"
-const { Header, Content, Sider } = Layout;
+const { Content, Footer } = Layout;
 export default function Home() {
 
-    const path = useRouteMatch()
-
-    console.log(path, 9999)
+    const { path } = useRouteMatch()
+    const { pathname } = useLocation()
 
     return (
-        <Layout>
+        <Layout style={{ height: "100vh" }}>
             <TopNav />
             <Layout>
                 <LeftSideNav />
                 <Layout style={{ padding: '0 24px 24px' }}>
-                    <Breadcrumb style={{ margin: '16px 0' }}>
+                    {/* <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>Home</Breadcrumb.Item>
                         <Breadcrumb.Item>List</Breadcrumb.Item>
                         <Breadcrumb.Item>App</Breadcrumb.Item>
-                    </Breadcrumb>
+                    </Breadcrumb> */}
                     <Content
                         className="site-layout-background"
                         style={{
@@ -43,20 +42,24 @@ export default function Home() {
                             minHeight: 280,
                         }}
                     >
-                        <Switch>
-                            <Route path={`${path}/anyone-short`} component={AnyoneQueryPage} />
+                        {pathname === path ? <div>hello</div> :
 
-                            <Route exact path={`${path}/user/gen`} component={UserShortGenPage} />
-                            <Route exact path={`${path}/user/:id/edit`} component={EditShortPage} />
-                            <Route exact path={`${path}/user/url-list`} component={UserURLListPage} />
+                            <Switch>
+                                <Route exact path={`${path}/anyone-short`} component={AnyoneQueryPage} />
 
-                            <Route exact path={`${path}/app/register`} component={AppRegisterPage} />
-                            <Route exact path={`${path}/app/list`} component={MyAppListPage} />
-                            <Route exact path={`${path}/app/:id/url-list`} component={AppURLListPage} />
-                        </Switch>
+                                <Route exact path={`${path}/user/gen`} component={UserShortGenPage} />
+                                <Route exact path={`${path}/user/:id/edit`} component={EditShortPage} />
+                                <Route exact path={`${path}/user/url-list`} component={UserURLListPage} />
+
+                                <Route exact path={`${path}/app/register`} component={AppRegisterPage} />
+                                <Route exact path={`${path}/app/list`} component={MyAppListPage} />
+                                <Route exact path={`${path}/app/:id/url-list`} component={AppURLListPage} />
+                            </Switch>
+                        }
                     </Content>
                 </Layout>
             </Layout>
+            <Footer></Footer>
         </Layout>
     )
 }

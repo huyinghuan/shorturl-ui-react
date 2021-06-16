@@ -6,22 +6,22 @@ import {
     TeamOutlined, UserOutlined, UserAddOutlined, HomeOutlined, LaptopOutlined
 } from '@ant-design/icons';
 
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 export default function LeftSideNav() {
+    const { path } = useRouteMatch()
 
     let history = useHistory();
     const menuClick: MenuClickEventHandler = function ({ key }) {
         console.log(key);
-        // let queue = [this.props.match.path]
-        // if(item.key !== "home"){
-        //   queue.push(item.key)
-        // }
-        // this.props.history.push(queue.join("/"))
-
+        const targetPath = `/home/${key}`
+        console.log(targetPath);
+        if (targetPath !== path) {
+            history.push(`/home/${key}`)
+        }
     }
 
     const [currentKey, setCurrentKey] = useState("")
