@@ -1,21 +1,14 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Input, Row, Col, Divider } from 'antd';
 import ShortList from "@components/short-list"
-
+import { useAppDispatch, useAppSelector } from '@src/hook'
+import { search as searchAPI } from "@store/short-list-slice"
 const { Search } = Input;
 const AnyShortPage: FC = () => {
-    const [isSearching, setIsSearching] = useState(false)
-    const [dataSource, setDatasource] = useState([] as any[])
+    const isSearching = useAppSelector((state) => { return state.shortList.loading })
+    const dispatch = useAppDispatch()
     const search = (short: string) => {
-        console.log(short)
-        setIsSearching(true)
-        setTimeout(() => {
-            setDatasource([{
-                id: 1,
-                short: "a"
-            }])
-            setIsSearching(false)
-        }, 1000)
+        dispatch(searchAPI(short))
     }
     return (<>
         <Row justify="start">
@@ -26,7 +19,7 @@ const AnyShortPage: FC = () => {
         <Divider />
         <Row>
             <Col span={24}>
-                <ShortList dataSource={dataSource} />
+                <ShortList />
             </Col>
         </Row>
     </>)

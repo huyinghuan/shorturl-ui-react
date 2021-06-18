@@ -9,6 +9,7 @@ const App: FC = () => (
     <Route exact path="/">
       <Redirect to="/home/anyone-short" />
     </Route>
+
   </Router>
 );
 export default App;

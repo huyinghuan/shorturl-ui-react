@@ -9,9 +9,8 @@ import AppURLListPage from "@pages/app/url-list"
 
 import UserShortGenPage from "@pages/user/gen"
 import UserURLListPage from "@pages/user/url-list"
-import EditShortPage from "@pages/user/edit-short"
 import AnyoneQueryPage from "@pages/anyone-short"
-
+import EditShortPage from "@pages/short-edit"
 
 import { useRouteMatch, useLocation } from 'react-router-dom';
 
@@ -46,9 +45,8 @@ export default function Home() {
 
                             <Switch>
                                 <Route exact path={`${path}/anyone-short`} component={AnyoneQueryPage} />
-
+                                <Route exact path={`${path}/anyone-short/edit/:type/:id`} component={EditShortPage} />
                                 <Route exact path={`${path}/user/gen`} component={UserShortGenPage} />
-                                <Route exact path={`${path}/user/:id/edit`} component={EditShortPage} />
                                 <Route exact path={`${path}/user/url-list`} component={UserURLListPage} />
 
                                 <Route exact path={`${path}/app/register`} component={AppRegisterPage} />

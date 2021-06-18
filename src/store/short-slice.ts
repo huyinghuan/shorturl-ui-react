@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { resultHandler } from "@src/service"
 import axios from "axios"
-export const shortListSlice = createSlice({
-    name: 'shortList',
+export const shortSlice = createSlice({
+    name: 'shortInfo',
     initialState: {
-        list: [],
+        info: {},
         loading: false
     },
     reducers: {
-        updateList: (state, action) => {
-            state.list = action.payload
+        update: (state, action) => {
+            state.info = action.payload
         },
         listLoading: (state) => {
             if (state.loading === false) {
@@ -23,15 +23,16 @@ export const shortListSlice = createSlice({
         }
     }
 })
-export const { updateList, listLoading, listLoaded } = shortListSlice.actions;
 
-export const search = (keyword: string) => {
+const { update, listLoading, listLoaded } = shortSlice.actions;
+
+export const loadInfo = (type: string, id: string) => {
     return async (dispatch: any) => {
         dispatch(listLoading())
-        const response = await axios.get("/api/short/query/any", { params: { url: keyword } })
+        const response = await axios.get(`/api/short/${type}/${id}`)
         dispatch(listLoaded())
-        dispatch(updateList(resultHandler(response)))
+        dispatch(update(resultHandler(response)))
     }
 }
 
-export default shortListSlice.reducer
+export default shortSlice.reducer
