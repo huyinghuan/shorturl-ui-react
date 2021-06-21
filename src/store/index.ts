@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ShortListReducer from "./short-list-slice"
 import ShortInfoReducer from "./short-slice"
+import ShortTagReducer from "./short-tag-slice"
 
 const store = configureStore({
     reducer: {
         shortList: ShortListReducer,
-        shortInfo: ShortInfoReducer
+        shortInfo: ShortInfoReducer,
+        shortTag: ShortTagReducer,
     },
 })
 

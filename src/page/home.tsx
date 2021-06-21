@@ -46,8 +46,8 @@ export default function Home() {
                             <Switch>
                                 <Route exact path={`${path}/anyone-short`} component={AnyoneQueryPage} />
                                 <Route exact path={`${path}/anyone-short/edit/:type/:id`} component={EditShortPage} />
-                                <Route exact path={`${path}/user/gen`} component={UserShortGenPage} />
-                                <Route exact path={`${path}/user/url-list`} component={UserURLListPage} />
+                                <Route exact path={`${path}/user-short-gen`} component={UserShortGenPage} />
+                                <Route exact path={`${path}/user-short-url-list`} component={UserURLListPage} />
 
                                 <Route exact path={`${path}/app/register`} component={AppRegisterPage} />
                                 <Route exact path={`${path}/app/list`} component={MyAppListPage} />

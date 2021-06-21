@@ -1,9 +1,17 @@
 import { notification } from 'antd'
-import { AxiosResponse } from 'axios'
-export const resultHandler = function (resp: AxiosResponse) {
+import axios, { AxiosResponse } from 'axios'
+export const resultHandler = function (resp: AxiosResponse, isOperation?: boolean) {
     const data = resp.data
+    console.log(resp.headers, resp.request)
     switch (resp.status) {
         case 200:
+            if (isOperation) {
+                notification.success({
+                    message: '操作成功',
+                    placement: 'bottomRight',
+                    duration: 3,
+                });
+            }
             break
         case 401:
             notification.warning({
@@ -17,6 +25,14 @@ export const resultHandler = function (resp: AxiosResponse) {
             notification.warning({
                 message: '403',
                 description: data || "此操作无权限",
+                placement: 'bottomRight',
+                duration: 3,
+            });
+            throw new Error("错误:" + resp.statusText)
+        case 404:
+            notification.warning({
+                message: '404',
+                description: data || "找不到数据",
                 placement: 'bottomRight',
                 duration: 3,
             });
@@ -40,3 +56,9 @@ export const resultHandler = function (resp: AxiosResponse) {
     }
     return data
 }
+
+export const API = axios.create({
+    validateStatus: function (status) {
+        return true
+    },
+})

@@ -1,8 +1,12 @@
 import { FC, useEffect } from "react"
-import { Form, Input, Button, Divider, Row, Col } from "antd"
-import { useParams, useLocation } from "react-router-dom"
+import { Form, Input, Button, Divider, Row, Col, Select } from "antd"
+import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { loadInfo } from "@store/short-slice"
+import { load, update } from "@store/short-slice"
+import ShortTagList from "@components/short-url-tag"
+const { Option } = Select;
+
+
 const ShortEdit: FC = function () {
     const { type, id } = useParams<{ type: string, id: string }>();
     const [form] = Form.useForm();
@@ -16,7 +20,7 @@ const ShortEdit: FC = function () {
     // let location = useLocation();
     useEffect(() => {
         console.log("update")
-        dispatch(loadInfo(type, id))
+        dispatch(load(type, id))
     }, [type, id, dispatch]);
 
     useEffect(() => {
@@ -24,10 +28,19 @@ const ShortEdit: FC = function () {
         form.setFieldsValue(info)
     }, [info, form])
 
+    // TODO
+    const apply = function () {
 
+    }
     const onFinish = (values: any) => {
-
+        dispatch(update(type, id, values))
     };
+
+    // TODO
+    const addTag = (values: any) => {
+        console.log(values)
+    }
+    let greenBtnCss = { marginRight: 20, backgroundColor: "#21ba45", color: "white" }
     return (
         <>
             <Form
@@ -41,14 +54,46 @@ const ShortEdit: FC = function () {
                 <Form.Item label="长链" name="url">
                     <Input style={{ width: 340 }} placeholder="输入长链地址" />
                 </Form.Item>
+                <Form.Item
+                    name="params"
+                    label="分流参数"
+                >
+                    <Select style={{ width: 120 }}>
+                        <Option value="">禁用</Option>
+                        <Option value="ua">UA</Option>
+                        <Option value="ip">IP</Option>
+                    </Select>
+                </Form.Item>
                 <Form.Item >
-                    <Button style={{ marginRight: 20, backgroundColor: "#39e839", color: "white" }}>保存</Button>
-                    <Button type="primary">应用</Button>
+                    <Button style={greenBtnCss} htmlType="submit" loading={isLoading}>保存</Button>
+                    <Button type="primary" onClick={apply}>应用</Button>
                 </Form.Item>
             </Form>
-            <Divider />
+            <Divider orientation="left">分流设置</Divider>
+            <Form
+                layout="inline"
+                onFinish={addTag}
+            >
+                <Form.Item label="描述" name="desc">
+                    <Input placeholder="长链描述" />
+                </Form.Item>
+                <Form.Item label="长链" name="url">
+                    <Input style={{ width: 340 }} placeholder="输入长链地址" />
+                </Form.Item>
+                <Form.Item
+                    name="proportion"
+                    label="分流比例"
+                >
+                    <Input type="number" style={{ width: 120 }} placeholder="0-100" />
+                </Form.Item>
+                <Form.Item >
+                    <Button style={greenBtnCss} htmlType="submit">添加</Button>
+                </Form.Item>
+            </Form>
+            <Divider orientation="left">分流列表</Divider>
             <Row>
                 <Col span={24}>
+                    <ShortTagList />
                 </Col>
             </Row>
         </>

@@ -13,29 +13,34 @@ const ShortListComponent: FC = () => {
             title: 'ID',
             dataIndex: 'id',
             key: 'id',
+            width: 120,
         },
         {
             title: '短链',
             dataIndex: 'short',
             key: 'short',
+            width: 200,
         },
         {
             title: '长链',
             dataIndex: 'url',
             key: 'url',
-        }, {
-            title: '类型',
-            dataIndex: 'type',
-            key: 'type',
+            ellipsis: true,
         }, {
             title: '归属',
             dataIndex: 'owner',
             key: 'owner',
+        }, {
+            title: '类型',
+            dataIndex: 'type',
+            key: 'type',
+            width: 80,
         },
         {
             title: '状态',
             dataIndex: 'status',
             key: 'status',
+            width: 80,
             render: (value: boolean) => {
                 return value ? "正常" : "禁用"
             }
@@ -46,7 +51,8 @@ const ShortListComponent: FC = () => {
             key: 'params',
             render: (value: string) => {
                 return value || "无分流"
-            }
+            },
+            width: 100,
         }, {
             title: '操作',
             dataIndex: 'operate',
@@ -63,7 +69,9 @@ const ShortListComponent: FC = () => {
         },
     ];
     return (
-        <Table dataSource={dataSource} columns={columns} rowKey="id" />
+        <Table dataSource={dataSource} columns={columns} rowKey="id" locale={{
+            "emptyText": "暂无数据"
+        }} />
     )
 }
 export default ShortListComponent

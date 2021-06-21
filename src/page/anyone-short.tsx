@@ -8,7 +8,8 @@ const AnyShortPage: FC = () => {
     const isSearching = useAppSelector((state) => { return state.shortList.loading })
     const dispatch = useAppDispatch()
     const search = (short: string) => {
-        dispatch(searchAPI(short))
+
+        dispatch(searchAPI(short.split("/").pop() || ""))
     }
     return (<>
         <Row justify="start">

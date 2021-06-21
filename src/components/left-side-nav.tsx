@@ -42,7 +42,7 @@ export default function LeftSideNav() {
         <Sider width={200} style={{ background: '#fff' }}>
             <Menu
                 mode="inline"
-                defaultSelectedKeys={[currentKey]}
+                selectedKeys={[currentKey]}
                 defaultOpenKeys={['user-short', 'app-short']}
                 style={{ height: '100%', borderRight: 0 }}
                 onClick={menuClick}
@@ -50,8 +50,8 @@ export default function LeftSideNav() {
                 <Menu.Item key="anyone-short"><span>任意短链查询</span></Menu.Item>
                 <SubMenu key="user-short" icon={<UserOutlined />} title="我的短链">
                     <Menu.Item key="user-short-gen">短链生成</Menu.Item>
-                    <Menu.Item key="user-short-edit">短链编辑</Menu.Item>
-                    <Menu.Item key="user-short-list">查询与列表</Menu.Item>
+                    {/* <Menu.Item key="user-short-edit">短链编辑</Menu.Item> */}
+                    <Menu.Item key="user-short-list">短链列表</Menu.Item>
                 </SubMenu>
                 <SubMenu key="app-short" icon={<LaptopOutlined />} title="我的应用接入">
                     <Menu.Item key="app-token-list">应用列表</Menu.Item>
