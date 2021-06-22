@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, Layout } from 'antd';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface'
+import { useAppSelector } from '@src/hook';
 import {
     AppstoreOutlined, UnorderedListOutlined, AppstoreAddOutlined,
     TeamOutlined, UserOutlined, UserAddOutlined, HomeOutlined, LaptopOutlined
@@ -13,7 +14,7 @@ const { SubMenu } = Menu;
 
 export default function LeftSideNav() {
     const { path } = useRouteMatch()
-
+    const user: any = useAppSelector((state) => { return state.user.info })
     let history = useHistory();
     const menuClick: MenuClickEventHandler = function ({ key }) {
         console.log(key);
@@ -28,13 +29,7 @@ export default function LeftSideNav() {
 
     let location = useLocation();
     useEffect(() => {
-        let arr = location.pathname.split("/")
-        let key = ""
-        if (arr.length === 2) {
-            key = arr[1]
-        } else if (arr.length > 1) {
-            key = arr[2]
-        }
+        let key = location.pathname.replace("/home/", "")
         setCurrentKey(key)
     }, [location])
 
@@ -51,11 +46,10 @@ export default function LeftSideNav() {
                 <SubMenu key="user-short" icon={<UserOutlined />} title="我的短链">
                     <Menu.Item key="user-short-gen">短链生成</Menu.Item>
                     {/* <Menu.Item key="user-short-edit">短链编辑</Menu.Item> */}
-                    <Menu.Item key="user-short-list">短链列表</Menu.Item>
+                    <Menu.Item key={`type/user/list/${user.username}`}>短链列表</Menu.Item>
                 </SubMenu>
                 <SubMenu key="app-short" icon={<LaptopOutlined />} title="我的应用接入">
-                    <Menu.Item key="app-token-list">应用列表</Menu.Item>
-                    <Menu.Item key="app-token-create">应用申请</Menu.Item>
+                    <Menu.Item key="app">应用申请与列表</Menu.Item>
                     <Menu.Item key="app-short-query">应用短链查询</Menu.Item>
                 </SubMenu>
             </Menu>

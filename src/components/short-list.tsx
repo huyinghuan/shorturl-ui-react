@@ -1,12 +1,26 @@
 import { FC } from 'react';
-import { Table } from "antd"
+import { Table, notification } from "antd"
 import { Link } from "react-router-dom"
-
-import { useAppSelector } from '@src/hook'
-
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useAppSelector, useAppDispatch } from '@src/hook'
+import { CopyOutlined } from '@ant-design/icons';
+import { useParams } from "react-router-dom"
+import { loadOwnerList } from "@store/short-list-slice"
 
 const ShortListComponent: FC = () => {
     const dataSource = useAppSelector(state => state.shortList.list)
+    const pager: any = useAppSelector(state => state.shortList.pager)
+    const isLoading = useAppSelector((state) => { return state.shortList.loading })
+    const { shortType, owner } = useParams<{ shortType: string, owner: string }>();
+
+
+    const dispatch = useAppDispatch()
+
+    const pageChange = (page: number, pageSize?: number | undefined) => {
+        if (shortType && owner) {
+            dispatch(loadOwnerList(shortType, owner, { page: page, pageSize: pageSize }))
+        }
+    }
 
     const columns = [
         {
@@ -20,17 +34,27 @@ const ShortListComponent: FC = () => {
             dataIndex: 'short',
             key: 'short',
             width: 200,
+            render: (value: string) => {
+                return (<CopyToClipboard text={value}
+                    onCopy={() => {
+                        notification.success({ message: "复制成功!", duration: 1 })
+                    }}>
+                    <span><CopyOutlined style={{ cursor: "copy" }} /> {value} </span>
+                </CopyToClipboard>)
+            }
         },
         {
             title: '长链',
             dataIndex: 'url',
             key: 'url',
             ellipsis: true,
-        }, {
-            title: '归属',
-            dataIndex: 'owner',
-            key: 'owner',
-        }, {
+        },
+        // {
+        //     title: '归属',
+        //     dataIndex: 'owner',
+        //     key: 'owner',
+        // },
+        {
             title: '类型',
             dataIndex: 'type',
             key: 'type',
@@ -57,11 +81,13 @@ const ShortListComponent: FC = () => {
             title: '操作',
             dataIndex: 'operate',
             key: 'operate',
+            width: 100,
             render: (value: string, item: any) => {
+                const itemType = item.type ? item.type : shortType
                 return (<span>
                     <Link
                         to={{
-                            pathname: `/home/anyone-short/edit/${item.type}/${item.id}`,
+                            pathname: `/home/anyone-short/edit/${itemType}/${item.id}`,
                         }}
                     >编辑</Link>
                 </span>)
@@ -69,9 +95,21 @@ const ShortListComponent: FC = () => {
         },
     ];
     return (
-        <Table dataSource={dataSource} columns={columns} rowKey="id" locale={{
-            "emptyText": "暂无数据"
-        }} />
+        <Table dataSource={dataSource}
+            columns={columns}
+            loading={isLoading}
+            rowKey="id"
+            locale={{
+                "emptyText": "暂无数据"
+            }}
+            pagination={{
+                current: pager.index,
+                pageSize: pager.pageSize,
+                total: pager.total,
+                onChange: pageChange
+            }}
+            scroll={{ y: 600 }}
+        />
     )
 }
 export default ShortListComponent

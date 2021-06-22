@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { resultHandler, API } from "@src/service"
 
 
-export const shortListSlice = createSlice({
-    name: 'shortList',
+export const appListSlice = createSlice({
+    name: 'app',
     initialState: {
         list: [],
         loading: false,
@@ -43,7 +43,10 @@ export const shortListSlice = createSlice({
         }
     }
 })
-export const { updateList, listLoading, listLoaded } = shortListSlice.actions;
+export const { updateList, listLoading, listLoaded } = appListSlice.actions;
+
+export const add = (data: { app_name: string, allow_list: string }) => { }
+
 
 export const search = (keyword: string) => {
     return async (dispatch: any) => {
@@ -58,11 +61,11 @@ export const search = (keyword: string) => {
     }
 }
 
-export const loadOwnerList = (shortType: string, owner: string, page?: { page: number, pageSize?: number | undefined }) => {
+export const loadList = (search: any, page?: { page: number, pageSize?: number | undefined }) => {
     return async (dispatch: any) => {
         dispatch(listLoading())
         let params = page || {}
-        API.get(`/api/short/${shortType}/list/${owner}`, { params: params }).then((response) => {
+        API.get(`/api/token`, { params: params }).then((response) => {
             const data = resultHandler(response)
             dispatch(updateList(data))
         }).catch((e) => {
@@ -75,4 +78,4 @@ export const loadOwnerList = (shortType: string, owner: string, page?: { page: n
 
 
 
-export default shortListSlice.reducer
+export default appListSlice.reducer

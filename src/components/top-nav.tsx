@@ -1,9 +1,14 @@
 import { Menu, Layout } from 'antd';
-
-
-const { Header, Content, Sider } = Layout;
+import { useAppDispatch } from '@src/hook'
+import { load as loadUserInfo } from "@store/user"
+import { useEffect } from 'react';
+const { Header } = Layout;
 
 export default function TopNav() {
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(loadUserInfo())
+    }, [dispatch])
     return (
         <Header className="header">
             <div className="logo" />

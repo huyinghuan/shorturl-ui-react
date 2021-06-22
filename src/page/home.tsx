@@ -8,7 +8,7 @@ import MyAppListPage from "@pages/app/my-app-list"
 import AppURLListPage from "@pages/app/url-list"
 
 import UserShortGenPage from "@pages/user/gen"
-import UserURLListPage from "@pages/user/url-list"
+import URLListPage from "@pages/url-list"
 import AnyoneQueryPage from "@pages/anyone-short"
 import EditShortPage from "@pages/short-edit"
 
@@ -47,10 +47,10 @@ export default function Home() {
                                 <Route exact path={`${path}/anyone-short`} component={AnyoneQueryPage} />
                                 <Route exact path={`${path}/anyone-short/edit/:type/:id`} component={EditShortPage} />
                                 <Route exact path={`${path}/user-short-gen`} component={UserShortGenPage} />
-                                <Route exact path={`${path}/user-short-url-list`} component={UserURLListPage} />
+                                <Route exact path={`${path}/type/:shortType/list/:owner`} component={URLListPage} />
 
                                 <Route exact path={`${path}/app/register`} component={AppRegisterPage} />
-                                <Route exact path={`${path}/app/list`} component={MyAppListPage} />
+                                <Route exact path={`${path}/app`} component={MyAppListPage} />
                                 <Route exact path={`${path}/app/:id/url-list`} component={AppURLListPage} />
                             </Switch>
                         }
