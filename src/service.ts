@@ -2,7 +2,6 @@ import { notification } from 'antd'
 import axios, { AxiosResponse } from 'axios'
 export const resultHandler = function (resp: AxiosResponse, isOperation?: boolean) {
     const data = resp.data
-    console.log(resp.headers, resp.request)
     switch (resp.status) {
         case 200:
             if (isOperation) {

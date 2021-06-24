@@ -3,15 +3,13 @@ import { Route, Switch, withRouter, Link } from 'react-router-dom';
 import LeftSideNav from "@components/left-side-nav"
 import TopNav from "@components/top-nav"
 
-import AppRegisterPage from "@pages/app/register"
 import MyAppListPage from "@pages/app/my-app-list"
-import AppURLListPage from "@pages/app/url-list"
 
 import UserShortGenPage from "@pages/user/gen"
 import URLListPage from "@pages/url-list"
 import AnyoneQueryPage from "@pages/anyone-short"
 import EditShortPage from "@pages/short-edit"
-
+import EditAppPage from "@pages/app/app-edit"
 import { useRouteMatch, useLocation } from 'react-router-dom';
 
 
@@ -47,11 +45,9 @@ export default function Home() {
                                 <Route exact path={`${path}/anyone-short`} component={AnyoneQueryPage} />
                                 <Route exact path={`${path}/anyone-short/edit/:type/:id`} component={EditShortPage} />
                                 <Route exact path={`${path}/user-short-gen`} component={UserShortGenPage} />
-                                <Route exact path={`${path}/type/:shortType/list/:owner`} component={URLListPage} />
-
-                                <Route exact path={`${path}/app/register`} component={AppRegisterPage} />
+                                <Route exact path={`${path}/short/type/:shortType/list/:owner`} component={URLListPage} />
                                 <Route exact path={`${path}/app`} component={MyAppListPage} />
-                                <Route exact path={`${path}/app/:id/url-list`} component={AppURLListPage} />
+                                <Route exact path={`${path}/app/edit/:id`} component={EditAppPage} />
                             </Switch>
                         }
                     </Content>

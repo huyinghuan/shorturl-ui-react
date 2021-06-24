@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Input, Divider, Form, Button, Row, Col } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { loadList } from "@store/app-slice"
+import { loadList, create } from "@store/app-slice"
 import AppList from "@components/app-list"
 
 const AppPage: FC = () => {
@@ -9,10 +9,11 @@ const AppPage: FC = () => {
     const user: any = useAppSelector((state) => { return state.user.info })
     const dispatch = useAppDispatch()
     const add = (form: any) => {
-        //dispatch(create(form.url))
+        console.log(form)
+        dispatch(create(form))
     }
     const search = (form: any) => {
-
+        dispatch(loadList(form))
     }
     const [form] = Form.useForm()
     const [searchForm] = Form.useForm()
@@ -38,7 +39,7 @@ const AppPage: FC = () => {
                 <Input style={{ width: 340 }} placeholder="逗号隔开: mgtv.com,d.mgtv.com" />
             </Form.Item>
             <Form.Item >
-                <Button type="primary" htmlType="submit">申请</Button>
+                <Button type="primary" htmlType="submit">注册</Button>
             </Form.Item>
         </Form>
         <Divider orientation="left">查询</Divider>

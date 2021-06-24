@@ -40,10 +40,14 @@ export const shortListSlice = createSlice({
             if (state.loading === true) {
                 state.loading = false
             }
+        },
+        emptyList: (state) => {
+            state.list = []
+            state.pager = {}
         }
     }
 })
-export const { updateList, listLoading, listLoaded } = shortListSlice.actions;
+export const { emptyList, updateList, listLoading, listLoaded } = shortListSlice.actions;
 
 export const search = (keyword: string) => {
     return async (dispatch: any) => {

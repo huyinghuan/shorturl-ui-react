@@ -1,11 +1,9 @@
 import { FC } from 'react';
-import { Table, Button } from "antd"
+import { Table, Space, Tag } from "antd"
 import { Link } from "react-router-dom"
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useAppSelector, useAppDispatch } from '@src/hook'
-import { CopyOutlined } from '@ant-design/icons';
-import { useParams } from "react-router-dom"
-import { loadOwnerList } from "@store/short-list-slice"
+
+import { loadList } from "@store/app-slice"
 
 const AppListComponent: FC = () => {
     const dataSource = useAppSelector(state => state.app.list)
@@ -13,11 +11,9 @@ const AppListComponent: FC = () => {
     const isLoading = useAppSelector((state) => { return state.app.loading })
     const dispatch = useAppDispatch()
     const pageChange = (page: number, pageSize?: number | undefined) => {
-        // if (shortType && owner) {
-        //     dispatch(loadOwnerList(shortType, owner, { page: page, pageSize: pageSize }))
-        // }
+        dispatch(loadList(null, { page: page, pageSize: pageSize }))
     }
-
+    const colors = ["magenta", "red", "purple", "geekblue", "blue", "cyan", "green"]
     const columns = [
         {
             title: 'ID',
@@ -29,7 +25,7 @@ const AppListComponent: FC = () => {
             title: '应用名称',
             dataIndex: 'app_name',
             key: 'app_name',
-            width: 120,
+            width: 160,
             ellipsis: true,
         },
         {
@@ -41,7 +37,17 @@ const AppListComponent: FC = () => {
         {
             title: '域名白名单',
             dataIndex: 'allow_list',
-            key: 'allow_list'
+            key: 'allow_list',
+            render: (value: string) => {
+                return (<>
+                    {value.split(",").map((item, idx) => {
+                        if (item === "") {
+                            return null
+                        }
+                        return <Tag key={idx} color={colors[idx % colors.length]}>{item}</Tag>
+                    })}
+                </>)
+            }
         },
         {
             title: '拥有者',
@@ -54,19 +60,20 @@ const AppListComponent: FC = () => {
             key: 'operate',
             width: 180,
             render: (value: string, item: any) => {
-                return (<span>
+                return (<Space size="middle">
                     <Link
                         to={{
                             pathname: `/home/app/edit/${item.id}`,
                         }}
                     >编辑</Link>
-                    <Button type="link">删除</Button>
+
+                    {/* <Button type="link">删除</Button> */}
                     <Link
                         to={{
                             pathname: `/home/short/type/app/list/${item.token}`,
                         }}
                     >短链列表</Link>
-                </span>)
+                </Space>)
             }
         },
     ];

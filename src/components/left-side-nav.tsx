@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import { Menu, Layout } from 'antd';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface'
 import { useAppSelector } from '@src/hook';
-import {
-    AppstoreOutlined, UnorderedListOutlined, AppstoreAddOutlined,
-    TeamOutlined, UserOutlined, UserAddOutlined, HomeOutlined, LaptopOutlined
-} from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 
 import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 
@@ -46,11 +43,10 @@ export default function LeftSideNav() {
                 <SubMenu key="user-short" icon={<UserOutlined />} title="我的短链">
                     <Menu.Item key="user-short-gen">短链生成</Menu.Item>
                     {/* <Menu.Item key="user-short-edit">短链编辑</Menu.Item> */}
-                    <Menu.Item key={`type/user/list/${user.username}`}>短链列表</Menu.Item>
+                    <Menu.Item key={`short/type/user/list/${user.username}`}>短链列表</Menu.Item>
                 </SubMenu>
                 <SubMenu key="app-short" icon={<LaptopOutlined />} title="我的应用接入">
                     <Menu.Item key="app">应用申请与列表</Menu.Item>
-                    <Menu.Item key="app-short-query">应用短链查询</Menu.Item>
                 </SubMenu>
             </Menu>
         </Sider>
