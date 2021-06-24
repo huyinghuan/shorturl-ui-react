@@ -5,12 +5,12 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useAppSelector, useAppDispatch } from '@src/hook'
 import { CopyOutlined } from '@ant-design/icons';
 import { useParams } from "react-router-dom"
-import { loadOwnerList } from "@store/short-list-slice"
+import { loadOwnerList } from "@store/short-slice"
 
 const ShortListComponent: FC = () => {
-    const dataSource = useAppSelector(state => state.shortList.list)
-    const pager: any = useAppSelector(state => state.shortList.pager)
-    const isLoading = useAppSelector((state) => { return state.shortList.loading })
+    const dataSource = useAppSelector(state => state.shortInfo.list)
+    const pager: any = useAppSelector(state => state.shortInfo.pager)
+    const isLoading = useAppSelector((state) => { return state.shortInfo.loading })
     const { shortType, owner } = useParams<{ shortType: string, owner: string }>();
 
 

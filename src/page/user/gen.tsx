@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { Input, Divider, Form, Button, Row, Col } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { create } from "@store/short-slice"
-import { emptyList } from "@store/short-list-slice"
+import { emptyList } from "@store/short-slice"
 import ShortList from "@components/short-list"
 
 const AnyShortPage: FC = () => {

@@ -3,7 +3,7 @@ import { Form, Input, Button, Divider, Row, Col, Select } from "antd"
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { load, update } from "@store/short-slice"
-import ShortTagList from "@components/short-url-tag"
+import ABTagList from "@components/ab-tag"
 const { Option } = Select;
 
 
@@ -93,7 +93,7 @@ const ShortEdit: FC = function () {
             <Divider orientation="left">分流列表</Divider>
             <Row>
                 <Col span={24}>
-                    <ShortTagList />
+                    <ABTagList />
                 </Col>
             </Row>
         </>

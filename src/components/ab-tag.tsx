@@ -32,7 +32,7 @@ const columns = [
 ];
 
 const ShortTagListComponent: FC = () => {
-    const dataSource = useAppSelector(state => state.shortTag.list)
+    const dataSource = useAppSelector(state => state.abTag.list)
     return (
         <Table dataSource={dataSource} columns={columns} rowKey="id" locale={{
             "emptyText": "暂无数据"
