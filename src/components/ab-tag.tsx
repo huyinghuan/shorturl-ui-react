@@ -1,38 +1,58 @@
 import { FC } from 'react';
-import { Table, Button } from "antd"
-import { useAppSelector } from '@src/hook'
+import { Table, Button, Tag } from "antd"
+import { useAppSelector, useAppDispatch } from '@src/hook'
+import { deleteTag } from '@src/store/abtag-slice';
 
-const columns = [
-    {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: '描述',
-        dataIndex: 'desc',
-        key: 'short',
-    },
-    {
-        title: '长链',
-        dataIndex: 'url',
-        key: 'url',
-    }, {
-        title: '比例',
-        dataIndex: 'proportion',
-        key: 'proportion',
-    }, {
-        title: '操作',
-        dataIndex: 'operate',
-        key: 'operate',
-        render: (value: string, item: any) => {
-            return (<Button>删除</Button>)
-        }
-    },
-];
 
 const ShortTagListComponent: FC = () => {
+
     const dataSource = useAppSelector(state => state.abTag.list)
+    const dispatch = useAppDispatch()
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: '描述',
+            dataIndex: 'url_desc',
+            key: 'short',
+        },
+        {
+            title: '长链',
+            dataIndex: 'url',
+            key: 'url',
+        }, {
+            title: '比例',
+            dataIndex: 'proportion',
+            key: 'proportion',
+        }, {
+            title: '是否应用',
+            dataIndex: 'effective',
+            key: 'effective',
+            render: (value: number) => {
+                return value === 0 ? <Tag color="#f50">待应用</Tag> : <Tag color="#87d068">应用中</Tag>
+            }
+        }, {
+            title: '是否删除',
+            dataIndex: 'effective',
+            key: 'effective',
+            render: (value: number) => {
+                return value === -1 ? <Tag color="#f50">已删除</Tag> : <Tag color="#87d068">正常</Tag>
+            }
+        }, {
+            title: '操作',
+            dataIndex: 'operate',
+            key: 'operate',
+            render: (value: string, item: any) => {
+                return (<Button onClick={() => {
+                    dispatch(deleteTag(item.short_type, item.short_id, item.id))
+                }}>删除</Button>)
+            }
+        },
+    ];
+
     return (
         <Table dataSource={dataSource} columns={columns} rowKey="id" locale={{
             "emptyText": "暂无数据"

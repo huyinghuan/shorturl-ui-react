@@ -1,8 +1,9 @@
 import { FC, useEffect } from "react"
-import { Form, Input, Button, Divider, Row, Col, Select } from "antd"
+import { Form, Input, Button, Divider, Row, Col, Select, InputNumber } from "antd"
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { load, update } from "@store/short-slice"
+import { load, create } from "@store/abtag-slice"
+import { load as loadShort, update as updateShort } from "@store/short-slice"
 import ABTagList from "@components/ab-tag"
 const { Option } = Select;
 
@@ -10,35 +11,40 @@ const { Option } = Select;
 const ShortEdit: FC = function () {
     const { type, id } = useParams<{ type: string, id: string }>();
     const [form] = Form.useForm();
-
+    const [tagForm] = Form.useForm();
     const isLoading = useAppSelector((state) => { return state.shortInfo.loading })
     const info = useAppSelector((state) => { return state.shortInfo.info })
-
+    const isAbtagLoading = useAppSelector((state) => { return state.abTag.loading })
     const dispatch = useAppDispatch()
 
     //  dispatch(loadInfo(type, id))
     // let location = useLocation();
     useEffect(() => {
-        console.log("update")
         dispatch(load(type, id))
+        dispatch(loadShort(type, id))
     }, [type, id, dispatch]);
 
     useEffect(() => {
-        console.log("data get")
         form.setFieldsValue(info)
     }, [info, form])
+
 
     // TODO
     const apply = function () {
 
     }
+
     const onFinish = (values: any) => {
-        dispatch(update(type, id, values))
+        dispatch(updateShort(type, id, values))
     };
 
-    // TODO
     const addTag = (values: any) => {
-        console.log(values)
+        dispatch(create(type, id, values))
+        tagForm.setFieldsValue({
+            url: "",
+            url_desc: "",
+            proportion: 0,
+        })
     }
     let greenBtnCss = { marginRight: 20, backgroundColor: "#21ba45", color: "white" }
     return (
@@ -73,8 +79,9 @@ const ShortEdit: FC = function () {
             <Form
                 layout="inline"
                 onFinish={addTag}
+                form={tagForm}
             >
-                <Form.Item label="描述" name="desc">
+                <Form.Item label="描述" name="url_desc">
                     <Input placeholder="长链描述" />
                 </Form.Item>
                 <Form.Item label="长链" name="url">
@@ -84,7 +91,7 @@ const ShortEdit: FC = function () {
                     name="proportion"
                     label="分流比例"
                 >
-                    <Input type="number" style={{ width: 120 }} placeholder="0-100" />
+                    <InputNumber type="number" style={{ width: 120 }} placeholder="0-100" />
                 </Form.Item>
                 <Form.Item >
                     <Button style={greenBtnCss} htmlType="submit">添加</Button>
