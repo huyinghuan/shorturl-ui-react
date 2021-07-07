@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { resultHandler, API } from "@src/service"
-
+import { load as loadTags } from "./abtag-slice"
 export const shortSlice = createSlice({
     name: 'shortInfo',
     initialState: {
@@ -9,6 +9,7 @@ export const shortSlice = createSlice({
         loading: false,
         list: [],
         pager: {},
+        doing: false
     },
     reducers: {
         set: (state, action) => {
@@ -22,6 +23,16 @@ export const shortSlice = createSlice({
         loaded: (state) => {
             if (state.loading === true) {
                 state.loading = false
+            }
+        },
+        doing: (state) => {
+            if (state.doing === false) {
+                state.doing = true
+            }
+        },
+        did: (state) => {
+            if (state.doing === true) {
+                state.doing = false
             }
         },
         updateList: (state, action) => {
@@ -52,7 +63,7 @@ export const shortSlice = createSlice({
     }
 })
 
-const { set, loading, loaded, updateList, emptyList } = shortSlice.actions;
+const { set, loading, loaded, updateList, emptyList, doing, did } = shortSlice.actions;
 export { emptyList }
 export const load = (type: string, id: string) => {
     return async (dispatch: any) => {
@@ -117,5 +128,18 @@ export const loadOwnerList = (shortType: string, owner: string, page?: { page: n
     }
 }
 
+export const deploy = (shortType: string, shortId: string) => {
+    return async (dispatch: any) => {
+        dispatch(doing())
+        API.get(`/api/short/${shortType}/${shortId}/deploy`).then((response) => {
+            resultHandler(response, true)
+        }).catch((e) => {
+            console.log(e)
+        }).then(() => {
+            dispatch(did())
+            dispatch(loadTags(shortType, shortId))
+        })
+    }
+}
 
 export default shortSlice.reducer

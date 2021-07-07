@@ -36,8 +36,8 @@ const ShortTagListComponent: FC = () => {
             }
         }, {
             title: '是否删除',
-            dataIndex: 'effective',
-            key: 'effective',
+            dataIndex: 'status',
+            key: 'status',
             render: (value: number) => {
                 return value === -1 ? <Tag color="#f50">已删除</Tag> : <Tag color="#87d068">正常</Tag>
             }

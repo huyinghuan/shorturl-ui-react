@@ -2,8 +2,8 @@ import { FC, useEffect } from "react"
 import { Form, Input, Button, Divider, Row, Col, Select, InputNumber } from "antd"
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { load, create } from "@store/abtag-slice"
-import { load as loadShort, update as updateShort } from "@store/short-slice"
+import { load as loadTags, create as createTag } from "@store/abtag-slice"
+import { load as loadShort, update as updateShort, deploy } from "@store/short-slice"
 import ABTagList from "@components/ab-tag"
 const { Option } = Select;
 
@@ -13,14 +13,15 @@ const ShortEdit: FC = function () {
     const [form] = Form.useForm();
     const [tagForm] = Form.useForm();
     const isLoading = useAppSelector((state) => { return state.shortInfo.loading })
+    const doing = useAppSelector((state) => { return state.shortInfo.doing })
     const info = useAppSelector((state) => { return state.shortInfo.info })
-    const isAbtagLoading = useAppSelector((state) => { return state.abTag.loading })
+
     const dispatch = useAppDispatch()
 
     //  dispatch(loadInfo(type, id))
     // let location = useLocation();
     useEffect(() => {
-        dispatch(load(type, id))
+        dispatch(loadTags(type, id))
         dispatch(loadShort(type, id))
     }, [type, id, dispatch]);
 
@@ -28,10 +29,8 @@ const ShortEdit: FC = function () {
         form.setFieldsValue(info)
     }, [info, form])
 
-
-    // TODO
     const apply = function () {
-
+        dispatch(deploy(type, id))
     }
 
     const onFinish = (values: any) => {
@@ -39,7 +38,7 @@ const ShortEdit: FC = function () {
     };
 
     const addTag = (values: any) => {
-        dispatch(create(type, id, values))
+        dispatch(createTag(type, id, values))
         tagForm.setFieldsValue({
             url: "",
             url_desc: "",
@@ -72,7 +71,7 @@ const ShortEdit: FC = function () {
                 </Form.Item>
                 <Form.Item >
                     <Button style={greenBtnCss} htmlType="submit" loading={isLoading}>保存</Button>
-                    <Button type="primary" onClick={apply}>应用</Button>
+                    <Button type="primary" onClick={apply} loading={doing}>应用</Button>
                 </Form.Item>
             </Form>
             <Divider orientation="left">分流设置</Divider>
