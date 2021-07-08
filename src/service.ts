@@ -19,6 +19,8 @@ export const resultHandler = function (resp: AxiosResponse, isOperation?: boolea
                 placement: 'bottomRight',
                 duration: 3,
             });
+
+            window.location.href = resp.headers["location"] + "&redirect=" + encodeURI(window.location.href)
             throw new Error("错误:" + resp.statusText)
         case 403:
             notification.warning({

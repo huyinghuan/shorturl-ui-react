@@ -25,5 +25,14 @@ export const load = () => {
     }
 }
 
+export const signOut = () => {
+    return async (dispatch: any) => {
+        API.delete("/api/user").then((response) => {
+            resultHandler(response, true)
+            dispatch(set({}))
+        })
+    }
+}
+
 
 export default userSlice.reducer

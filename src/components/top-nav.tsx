@@ -1,6 +1,6 @@
 import { Menu, Layout, Typography, Row, Col } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { load as loadUserInfo } from "@store/user"
+import { load as loadUserInfo, signOut } from "@store/user"
 import { useEffect, CSSProperties } from 'react';
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons"
 const { Header } = Layout;
@@ -16,7 +16,7 @@ export default function TopNav() {
     const menuClick = function (item: any) {
         switch (item.key) {
             case "signOut":
-                //signOut()
+                dispatch(signOut())
                 break
             default:
         }

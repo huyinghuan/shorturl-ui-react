@@ -9,15 +9,16 @@ const ShortTagListComponent: FC = () => {
     const dataSource = useAppSelector(state => state.abTag.list)
     const dispatch = useAppDispatch()
     const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-        },
+        // {
+        //     title: 'ID',
+        //     dataIndex: 'id',
+        //     key: 'id',
+        // },
         {
             title: '描述',
             dataIndex: 'url_desc',
             key: 'short',
+            width: 200,
         },
         {
             title: '长链',
@@ -27,20 +28,23 @@ const ShortTagListComponent: FC = () => {
             title: '比例',
             dataIndex: 'proportion',
             key: 'proportion',
+            width: 80,
         }, {
-            title: '是否应用',
+            title: '应用',
             dataIndex: 'effective',
             key: 'effective',
             render: (value: number) => {
                 return value === 0 ? <Tag color="#f50">待应用</Tag> : <Tag color="#87d068">应用中</Tag>
-            }
+            },
+            width: 80,
         }, {
-            title: '是否删除',
+            title: '状态',
             dataIndex: 'status',
             key: 'status',
             render: (value: number) => {
                 return value === -1 ? <Tag color="#f50">已删除</Tag> : <Tag color="#87d068">正常</Tag>
-            }
+            },
+            width: 80,
         }, {
             title: '操作',
             dataIndex: 'operate',
@@ -49,7 +53,8 @@ const ShortTagListComponent: FC = () => {
                 return (<Button onClick={() => {
                     dispatch(deleteTag(item.short_type, item.short_id, item.id))
                 }}>删除</Button>)
-            }
+            },
+            width: 100,
         },
     ];
 
