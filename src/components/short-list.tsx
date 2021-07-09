@@ -54,12 +54,12 @@ const ShortListComponent: FC = () => {
         //     dataIndex: 'owner',
         //     key: 'owner',
         // },
-        {
-            title: '类型',
-            dataIndex: 'type',
-            key: 'type',
-            width: 80,
-        },
+        // {
+        //     title: '类型',
+        //     dataIndex: 'type',
+        //     key: 'type',
+        //     width: 80,
+        // },
         {
             title: '状态',
             dataIndex: 'status',
