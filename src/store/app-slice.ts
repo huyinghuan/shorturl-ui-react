@@ -73,6 +73,17 @@ export const update = (id: string, data: { app_name: string, allow_list: string 
     }
 }
 
+export const enableSingleTable = (id: string, is_single_table: boolean) => {
+    return async (dispatch: Dispatch<any>) => {
+        API.put(`/api/token/${id}/switch-single-table/${is_single_table ? "enable" : "disable"}`).then((response) => {
+            resultHandler(response, true)
+            dispatch(load(id))
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
+}
+
 let searchParams = {}
 
 

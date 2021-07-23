@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react"
-import { Form, Input, Button, Divider, Tag } from "antd"
+import { Form, Input, Button, Divider, Tag, Switch, Typography, Space } from "antd"
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { load, update } from "@store/app-slice"
+import { load, update, enableSingleTable } from "@store/app-slice"
 
 
 const AppEdit: FC = function () {
@@ -54,9 +54,18 @@ const AppEdit: FC = function () {
             allow_list: allowList
         }))
     };
+
+    const OnSave = () => {
+        onFinish({
+            app_name: form.getFieldValue("app_name")
+        })
+    }
+
+    const onChange = function (checked: boolean) {
+        dispatch(enableSingleTable(id, checked))
+    }
+
     const colors = ["magenta", "red", "purple", "geekblue", "blue", "cyan", "green"]
-
-
     let greenBtnCss = { marginRight: 20, backgroundColor: "#21ba45", color: "white" }
     return (
         <>
@@ -75,6 +84,14 @@ const AppEdit: FC = function () {
                     <Button style={greenBtnCss} type="primary" htmlType="submit">保存</Button>
                 </Form.Item>
             </Form>
+            <Divider orientation="left">分表 <Typography.Link href="http://git.hunantv.com/huyinhuan/shorturl" style={{ fontSize: 12 }}>什么是分表?</Typography.Link></Divider>
+            <Form>
+                <Space>
+                    <Form.Item label="启用分表">
+                        <Switch onChange={onChange} checked={info.is_single_table} />
+                    </Form.Item>
+                </Space>
+            </Form>
 
             <Divider orientation="left">域名白名单</Divider>
             <Form
@@ -87,6 +104,7 @@ const AppEdit: FC = function () {
                 </Form.Item>
                 <Form.Item >
                     <Button type="primary" style={greenBtnCss} htmlType="submit">添加</Button>
+                    <Button style={{ backgroundColor: "#1890ff", color: "white" }} onClick={OnSave}>保存</Button>
                 </Form.Item>
             </Form>
 

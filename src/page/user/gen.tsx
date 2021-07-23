@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { Input, Divider, Form, Button, Row, Col } from 'antd';
+import { Input, Divider, Form, Button, Row, Col, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { create } from "@store/short-slice"
 import { emptyList } from "@store/short-slice"
@@ -33,6 +33,9 @@ const AnyShortPage: FC = () => {
             </Form.Item>
             <Form.Item >
                 <Button type="primary" htmlType="submit" loading={isLoading} >生成</Button>
+            </Form.Item>
+            <Form.Item>
+                <Typography.Link href="/#/home/app" style={{ fontSize: 12 }}>需要批量导入?</Typography.Link>
             </Form.Item>
         </Form>
         <Divider orientation="left">短链</Divider>

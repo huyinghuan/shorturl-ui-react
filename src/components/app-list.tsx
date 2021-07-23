@@ -50,6 +50,15 @@ const AppListComponent: FC = () => {
             }
         },
         {
+            title: '是否单表',
+            dataIndex: 'is_single_table',
+            key: 'is_single_table',
+            width: 80,
+            render: (value: boolean, item: any) => {
+                return value ? "是" : "否"
+            }
+        },
+        {
             title: '拥有者',
             dataIndex: 'username',
             key: 'username',
@@ -58,7 +67,7 @@ const AppListComponent: FC = () => {
             title: '操作',
             dataIndex: 'operate',
             key: 'operate',
-            width: 180,
+            width: 220,
             render: (value: string, item: any) => {
                 return (<Space size="middle">
                     <Link
@@ -73,6 +82,12 @@ const AppListComponent: FC = () => {
                             pathname: `/home/short/type/app/list/${item.token}`,
                         }}
                     >短链列表</Link>
+
+                    <Link
+                        to={{
+                            pathname: `/home/app/${item.id}/import-and-gen`,
+                        }}
+                    >批量导入</Link>
                 </Space>)
             }
         },

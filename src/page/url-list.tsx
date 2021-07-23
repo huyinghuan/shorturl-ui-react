@@ -1,5 +1,5 @@
 import ShortList from "@components/short-list"
-import { useAppDispatch, useAppSelector } from '@src/hook'
+import { useAppDispatch } from '@src/hook'
 import { loadOwnerList } from "@store/short-slice"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"

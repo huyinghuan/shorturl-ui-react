@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Menu, Layout } from 'antd';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface'
 import { useAppSelector } from '@src/hook';
-import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, CoffeeOutlined } from '@ant-design/icons';
 
 import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 
@@ -47,6 +47,10 @@ export default function LeftSideNav() {
                 </SubMenu>
                 <SubMenu key="app-short" icon={<LaptopOutlined />} title="我的应用接入">
                     <Menu.Item key="app">应用申请与列表</Menu.Item>
+                </SubMenu>
+                <SubMenu key="help-doc" icon={<CoffeeOutlined />} title="使用帮助">
+                    <Menu.Item key="help-doc-api">API生成短链</Menu.Item>
+                    <Menu.Item key="help-doc-import">批量导入生成</Menu.Item>
                 </SubMenu>
             </Menu>
         </Sider>

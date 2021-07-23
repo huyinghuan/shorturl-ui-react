@@ -9,7 +9,6 @@ const AppPage: FC = () => {
     const user: any = useAppSelector((state) => { return state.user.info })
     const dispatch = useAppDispatch()
     const add = (form: any) => {
-        console.log(form)
         dispatch(create(form))
     }
     const search = (form: any) => {
