@@ -16,7 +16,6 @@ const ImportAndGetPage: FC = () => {
         setHasExpired(checked)
     }
     const onFinish = (valuse: any) => {
-        console.log(valuse)
         API.post(`/api/token/${id}/import-and-gen`, valuse).then((response) => {
             const result = resultHandler(response, true) || []
             form.resetFields()

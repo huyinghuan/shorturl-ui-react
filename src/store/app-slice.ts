@@ -19,7 +19,7 @@ export const appSlice = createSlice({
                 pageTotal: 1
             }
             if (action.payload.data) {
-                state.list = action.payload.data
+                state.list = action.payload.data || []
                 const pager = action.payload.page
                 if (pager) {
                     state.pager = pager

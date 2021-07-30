@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react"
-import { Form, Input, Button, Divider, Tag, Switch, Typography, Space } from "antd"
+import { Form, Input, Button, Divider, Tag, Switch, Typography, Space, Modal } from "antd"
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { load, update, enableSingleTable } from "@store/app-slice"
-
+import { API, resultHandler } from "@src/service"
 
 const AppEdit: FC = function () {
     const { id } = useParams<{ id: string }>();
@@ -11,8 +11,9 @@ const AppEdit: FC = function () {
     const [domainForm] = Form.useForm();
     const [allowList, setAllowList] = useState("")
     const info: any = useAppSelector((state) => { return state.app.singleInfo })
-
+    const userInfo: any = useAppSelector((state) => { return state.user.info })
     const dispatch = useAppDispatch()
+
 
     useEffect(() => {
         dispatch(load(id))
@@ -65,6 +66,22 @@ const AppEdit: FC = function () {
         dispatch(enableSingleTable(id, checked))
     }
 
+    const showSQL = function () {
+        API.get(`/api/token/${id}/new-table-sql`).then((response) => {
+            const result = resultHandler(response) || ""
+            console.log(result)
+            Modal.info({
+                title: "SQL",
+                content: (
+                    <pre>{result}</pre>
+                ),
+                width: 800,
+            })
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
+
     const colors = ["magenta", "red", "purple", "geekblue", "blue", "cyan", "green"]
     let greenBtnCss = { marginRight: 20, backgroundColor: "#21ba45", color: "white" }
     return (
@@ -90,6 +107,7 @@ const AppEdit: FC = function () {
                     <Form.Item label="启用分表">
                         <Switch onChange={onChange} checked={info.is_single_table} />
                     </Form.Item>
+                    {!userInfo.isAdmin ? null : <Form.Item><Button style={greenBtnCss} onClick={showSQL}>查看建表语句</Button></Form.Item>}
                 </Space>
             </Form>
 
