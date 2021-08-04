@@ -29,6 +29,9 @@ export default function TopNav() {
     return (
         <Header className="header" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span style={cssStyle}>MGTV短链系统</span>
+            <span style={{ "color": "white" }}>
+                注意该版本不支持查询修改以前的老短链，如有需要请联系 胡瀛寰 处理
+            </span>
             <Menu
                 mode="horizontal"
                 onClick={(item: any) => { menuClick(item) }}

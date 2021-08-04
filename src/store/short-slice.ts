@@ -65,9 +65,9 @@ export const shortSlice = createSlice({
 
 const { set, loading, loaded, updateList, emptyList, doing, did } = shortSlice.actions;
 export { emptyList }
-export const load = (type: string, id: string) => {
+export const load = (idraw: string) => {
     return async (dispatch: any) => {
-        API.get(`/api/short/${type}/${id}`).then((response) => {
+        API.get(`/api/short/short-raw/${idraw}`).then((response) => {
             dispatch(set(resultHandler(response)))
         }).catch((e) => {
             console.log(e)
@@ -76,11 +76,11 @@ export const load = (type: string, id: string) => {
 }
 
 // 更新短链
-export const update = (type: string, id: string, values: any) => {
+export const update = (idraw: string, values: any) => {
     return async (dispatch: any) => {
-        API.put(`/api/short/${type}/${id}`, values).then((response) => {
+        API.put(`/api/short/short-raw/${idraw}`, values).then((response) => {
             resultHandler(response, true)
-            dispatch(load(type, id))
+            dispatch(load(idraw))
         }).catch((e) => {
             console.log(e)
         })
@@ -128,16 +128,16 @@ export const loadOwnerList = (shortType: string, owner: string, page?: { page: n
     }
 }
 
-export const deploy = (shortType: string, shortId: string) => {
+export const deploy = (idraw: string) => {
     return async (dispatch: any) => {
         dispatch(doing())
-        API.get(`/api/short/${shortType}/${shortId}/deploy`).then((response) => {
+        API.get(`/api/short/short-raw/${idraw}/deploy`).then((response) => {
             resultHandler(response, true)
         }).catch((e) => {
             console.log(e)
         }).then(() => {
             dispatch(did())
-            dispatch(loadTags(shortType, shortId))
+            dispatch(loadTags(idraw))
         })
     }
 }

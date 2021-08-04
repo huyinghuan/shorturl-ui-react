@@ -69,7 +69,6 @@ const AppEdit: FC = function () {
     const showSQL = function () {
         API.get(`/api/token/${id}/new-table-sql`).then((response) => {
             const result = resultHandler(response) || ""
-            console.log(result)
             Modal.info({
                 title: "SQL",
                 content: (

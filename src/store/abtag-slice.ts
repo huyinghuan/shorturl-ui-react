@@ -27,33 +27,33 @@ const { updateList, loading, loaded } = abTagSlice.actions;
 
 export { loading, loaded }
 
-export const create = (shortType: string, short: string, data: { url_desc: string, url: string, proportion: number }) => {
+export const create = (idRaw: string, data: { url_desc: string, url: string, proportion: number }) => {
     return async (dispatch: any) => {
-        API.post(`/api/short/${shortType}/${short}/tag`, data).then((response) => {
+        API.post(`/api/short/short-raw/${idRaw}/tag`, data).then((response) => {
             resultHandler(response, true)
-            dispatch(load(shortType, short))
+            dispatch(load(idRaw))
         }).catch((e) => {
             console.log(e)
         })
     }
 }
 
-export const update = (shortType: string, short: string, data: { url_desc: string, url: string, proportion: number }) => {
+export const update = (idRaw: string, data: { url_desc: string, url: string, proportion: number }) => {
     return async (dispatch: Dispatch<any>) => {
-        API.put(`/api/short/${shortType}/${short}/tag`, data).then((response) => {
+        API.put(`/api/short/short-raw/${idRaw}/tag`, data).then((response) => {
             resultHandler(response, true)
-            dispatch(load(shortType, short))
+            dispatch(load(idRaw))
         }).catch((e) => {
             console.log(e)
         })
     }
 }
 
-export const deleteTag = (shortType: string, short: string, tagId: number) => {
+export const deleteTag = (idRaw: string, tagId: number) => {
     return async (dispatch: Dispatch<any>) => {
-        API.delete(`/api/short/${shortType}/${short}/tag/${tagId}`).then((response) => {
+        API.delete(`/api/short/short-raw/${idRaw}/tag/${tagId}`).then((response) => {
             resultHandler(response, true)
-            dispatch(load(shortType, short))
+            dispatch(load(idRaw))
         }).catch((e) => {
             console.log(e)
         })
@@ -61,10 +61,10 @@ export const deleteTag = (shortType: string, short: string, tagId: number) => {
 }
 
 
-export const load = (shortType: string, short: string) => {
+export const load = (idRaw: string) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading())
-        API.get(`/api/short/${shortType}/${short}/tag`).then((response) => {
+        API.get(`/api/short/short-raw/${idRaw}/tag`).then((response) => {
             const data = resultHandler(response)
             dispatch(updateList(data))
         }).catch((e) => {

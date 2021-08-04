@@ -9,7 +9,7 @@ const { Option } = Select;
 
 
 const ShortEdit: FC = function () {
-    const { type, id } = useParams<{ type: string, id: string }>();
+    const { idraw } = useParams<{ idraw: string }>();
     const [form] = Form.useForm();
     const [tagForm] = Form.useForm();
     const isLoading = useAppSelector((state) => { return state.shortInfo.loading })
@@ -21,24 +21,24 @@ const ShortEdit: FC = function () {
     //  dispatch(loadInfo(type, id))
     // let location = useLocation();
     useEffect(() => {
-        dispatch(loadTags(type, id))
-        dispatch(loadShort(type, id))
-    }, [type, id, dispatch]);
+        dispatch(loadTags(idraw))
+        dispatch(loadShort(idraw))
+    }, [idraw, dispatch]);
 
     useEffect(() => {
         form.setFieldsValue(info)
     }, [info, form])
 
     const apply = function () {
-        dispatch(deploy(type, id))
+        dispatch(deploy(idraw))
     }
 
     const onFinish = (values: any) => {
-        dispatch(updateShort(type, id, values))
+        dispatch(updateShort(idraw, values))
     };
 
     const addTag = (values: any) => {
-        dispatch(createTag(type, id, values))
+        dispatch(createTag(idraw, values))
         tagForm.setFieldsValue({
             url: "",
             url_desc: "",

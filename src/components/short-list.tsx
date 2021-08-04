@@ -83,11 +83,11 @@ const ShortListComponent: FC = () => {
             key: 'operate',
             width: 100,
             render: (value: string, item: any) => {
-                const itemType = item.type ? item.type : shortType
+                const idRaw = item.short.split("/").pop()
                 return (<span>
                     <Link
                         to={{
-                            pathname: `/home/anyone-short/edit/${itemType}/${item.id}`,
+                            pathname: `/home/anyone-short/edit/${idRaw}`,
                         }}
                     >编辑</Link>
                 </span>)

@@ -51,7 +51,8 @@ const ShortTagListComponent: FC = () => {
             key: 'operate',
             render: (value: string, item: any) => {
                 return (<Button onClick={() => {
-                    dispatch(deleteTag(item.short_type, item.short_id, item.id))
+                    // TODO
+                    dispatch(deleteTag(item.short_type, item.id))
                 }}>删除</Button>)
             },
             width: 100,
