@@ -11,6 +11,7 @@ import AnyoneQueryPage from "@pages/anyone-short"
 import EditShortPage from "@pages/short-edit"
 import EditAppPage from "@pages/app/app-edit"
 import ImportAndGenPage from "@pages/app/import-and-gen"
+import DocsPages from '@pages/doc';
 import { useRouteMatch, useLocation } from 'react-router-dom';
 
 
@@ -50,6 +51,7 @@ export default function Home() {
                                 <Route exact path={`${path}/app`} component={MyAppListPage} />
                                 <Route exact path={`${path}/app/edit/:id`} component={EditAppPage} />
                                 <Route exact path={`${path}/app/:id/import-and-gen`} component={ImportAndGenPage} />
+                                <Route exact path={`${path}/doc/:doc`} component={DocsPages} />
                             </Switch>
                         }
                     </Content>
