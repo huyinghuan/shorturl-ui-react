@@ -99,7 +99,7 @@ const ShortEdit: FC = function () {
             <Divider orientation="left">分流列表</Divider>
             <Row>
                 <Col span={24}>
-                    <ABTagList />
+                    <ABTagList idraw={idraw} />
                 </Col>
             </Row>
         </>

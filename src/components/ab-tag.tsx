@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '@src/hook'
 import { deleteTag } from '@src/store/abtag-slice';
 
 
-const ShortTagListComponent: FC = () => {
+const ShortTagListComponent: FC<{ idraw: string }> = (props: { idraw: string }) => {
 
     const dataSource = useAppSelector(state => state.abTag.list)
     const dispatch = useAppDispatch()
@@ -51,8 +51,7 @@ const ShortTagListComponent: FC = () => {
             key: 'operate',
             render: (value: string, item: any) => {
                 return (<Button onClick={() => {
-                    // TODO
-                    dispatch(deleteTag(item.short_type, item.id))
+                    dispatch(deleteTag(props.idraw, item.id))
                 }}>删除</Button>)
             },
             width: 100,
