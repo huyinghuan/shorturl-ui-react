@@ -33,7 +33,7 @@ const ShortListComponent: FC = () => {
             title: '短链',
             dataIndex: 'short',
             key: 'short',
-            width: 200,
+            width: 230,
             render: (value: string) => {
                 return (<CopyToClipboard text={value}
                     onCopy={() => {

@@ -35,7 +35,7 @@ const AnyShortPage: FC = () => {
                 <Button type="primary" htmlType="submit" loading={isLoading} >生成</Button>
             </Form.Item>
             <Form.Item>
-                <Typography.Link href="/#/home/app" style={{ fontSize: 12 }}>需要批量导入?</Typography.Link>
+                <Typography.Link href="/#/home/doc/batch-import.md" style={{ fontSize: 12 }}>需要批量导入?</Typography.Link>
             </Form.Item>
         </Form>
         <Divider orientation="left">短链</Divider>

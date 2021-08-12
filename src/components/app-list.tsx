@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Table, Space, Tag } from "antd"
+import { CheckCircleTwoTone, CheckCircleOutlined } from "@ant-design/icons"
 import { Link } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '@src/hook'
 
@@ -55,7 +56,7 @@ const AppListComponent: FC = () => {
             key: 'is_single_table',
             width: 80,
             render: (value: boolean, item: any) => {
-                return value ? "是" : "否"
+                return value ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CheckCircleOutlined />
             }
         },
         {
