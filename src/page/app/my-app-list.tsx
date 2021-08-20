@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { Input, Divider, Form, Button, Row, Col } from 'antd';
+import { Input, Divider, Form, Button, Row, Col, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { loadList, create } from "@store/app-slice"
 import AppList from "@components/app-list"
@@ -39,6 +39,9 @@ const AppPage: FC = () => {
             </Form.Item>
             <Form.Item >
                 <Button type="primary" htmlType="submit">注册</Button>
+            </Form.Item>
+            <Form.Item>
+                <Typography.Link href="/#/home/doc/safe.md" style={{ fontSize: 12, color: 'red' }}>安全提醒~!</Typography.Link>
             </Form.Item>
         </Form>
         <Divider orientation="left">查询</Divider>

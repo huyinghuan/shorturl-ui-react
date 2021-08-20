@@ -51,6 +51,7 @@ export default function LeftSideNav() {
                 <SubMenu key="help-doc" icon={<CoffeeOutlined />} title="使用帮助">
                     <Menu.Item key={`doc/api-v2.md`}>API生成短链</Menu.Item>
                     <Menu.Item key={`doc/batch-import.md`}>批量导入生成</Menu.Item>
+                    <Menu.Item key={`doc/safe.md`}>API安全!必读!</Menu.Item>
                 </SubMenu>
             </Menu>
         </Sider>

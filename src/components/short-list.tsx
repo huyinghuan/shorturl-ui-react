@@ -60,15 +60,15 @@ const ShortListComponent: FC = () => {
         //     key: 'type',
         //     width: 80,
         // },
-        {
-            title: '状态',
-            dataIndex: 'status',
-            key: 'status',
-            width: 80,
-            render: (value: boolean) => {
-                return value ? "正常" : "禁用"
-            }
-        },
+        // {
+        //     title: '状态',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     width: 80,
+        //     render: (value: boolean) => {
+        //         return value ? "正常" : "禁用"
+        //     }
+        // },
         {
             title: '分流A/B',
             dataIndex: 'params',

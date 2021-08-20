@@ -15,7 +15,7 @@ const DocsPages: FC = () => {
             })
     }, [doc])
 
-    return <section>
+    return <section style={{ height: '100%', overflowY: 'auto', backgroundColor: 'white' }}>
         <article dangerouslySetInnerHTML={{ __html: content }}></article>
     </section>
 }
