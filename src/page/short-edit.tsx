@@ -71,7 +71,7 @@ const ShortEdit: FC = function () {
                 </Form.Item>
                 <Form.Item >
                     <Button style={greenBtnCss} htmlType="submit" loading={isLoading}>保存</Button>
-                    <Button type="primary" onClick={apply} loading={doing}>应用</Button>
+                    <Button type="primary" onClick={apply} loading={doing}>应用(使修改生效)</Button>
                 </Form.Item>
             </Form>
             <Divider orientation="left">分流设置</Divider>

@@ -22,6 +22,10 @@ const ShortListComponent: FC = () => {
         }
     }
 
+    const numberToString = (number: number) => {
+        return number < 10 ? "0" + number.toString() : number.toString()
+    }
+
     const columns = [
         {
             title: 'ID',
@@ -49,11 +53,20 @@ const ShortListComponent: FC = () => {
             key: 'url',
             ellipsis: true,
         },
-        // {
-        //     title: '归属',
-        //     dataIndex: 'owner',
-        //     key: 'owner',
-        // },
+        {
+            title: '创建时间',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            width: 200,
+            render: (value: string) => {
+                let d = new Date(value);
+                let month = numberToString(d.getMonth() + 1)
+                let date = numberToString(d.getDate())
+                let hour = numberToString(d.getHours())
+                let minute = numberToString(d.getMinutes())
+                return d.getFullYear() + "-" + month + "-" + date + " " + hour + ":" + minute
+            }
+        },
         // {
         //     title: '类型',
         //     dataIndex: 'type',

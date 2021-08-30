@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Menu, Layout } from 'antd';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface'
 import { useAppSelector } from '@src/hook';
-import { UserOutlined, LaptopOutlined, CoffeeOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, CoffeeOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 
@@ -39,7 +39,7 @@ export default function LeftSideNav() {
                 style={{ height: '100%', borderRight: 0 }}
                 onClick={menuClick}
             >
-                <Menu.Item key="anyone-short"><span>任意短链查询</span></Menu.Item>
+                <Menu.Item key="anyone-short" icon={<SearchOutlined />}><span>任意短链查询</span></Menu.Item>
                 <SubMenu key="user-short" icon={<UserOutlined />} title="我的短链">
                     <Menu.Item key="user-short-gen">短链生成</Menu.Item>
                     {/* <Menu.Item key="user-short-edit">短链编辑</Menu.Item> */}

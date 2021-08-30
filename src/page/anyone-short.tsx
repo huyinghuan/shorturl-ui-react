@@ -1,16 +1,20 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Input, Row, Col, Divider } from 'antd';
 import ShortList from "@components/short-list"
 import { useAppDispatch, useAppSelector } from '@src/hook'
-import { search as searchAPI } from "@store/short-slice"
+import { search as searchAPI, emptyList } from "@store/short-slice"
 const { Search } = Input;
 const AnyShortPage: FC = () => {
     const isSearching = useAppSelector((state) => { return state.shortInfo.loading })
     const dispatch = useAppDispatch()
     const search = (short: string) => {
-
         dispatch(searchAPI(short.split("/").pop() || ""))
     }
+
+    useEffect(() => {
+        dispatch(emptyList())
+    }, [])
+
     return (<>
         <Row justify="start">
             <Col span={8}>
