@@ -3,12 +3,14 @@ import ShortInfoReducer from "./short-slice"
 import ABTagReducer from "./abtag-slice"
 import userReducer from "./user"
 import appReducer from "./app-slice"
+import appAdminsReducer from "./app-admins-slice"
 const store = configureStore({
     reducer: {
         shortInfo: ShortInfoReducer,
         abTag: ABTagReducer,
         user: userReducer,
         app: appReducer,
+        appAdmins: appAdminsReducer
     },
 })
 

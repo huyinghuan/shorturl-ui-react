@@ -3,6 +3,7 @@ import { Form, Input, Button, Divider, Tag, Switch, Typography, Space, Modal } f
 import { useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { load, update, enableSingleTable } from "@store/app-slice"
+import { load as loadAppAdmins, deleteItem as deleteAppAdminsItem, create as createAppAdminsItem } from "@store/app-admins-slice"
 import { API, resultHandler } from "@src/service"
 
 const AppEdit: FC = function () {
@@ -10,13 +11,14 @@ const AppEdit: FC = function () {
     const [form] = Form.useForm();
     const [domainForm] = Form.useForm();
     const [allowList, setAllowList] = useState("")
+    const appAdmins = useAppSelector((state) => { return state.appAdmins.list })
     const info: any = useAppSelector((state) => { return state.app.singleInfo })
     const userInfo: any = useAppSelector((state) => { return state.user.info })
     const dispatch = useAppDispatch()
 
-
     useEffect(() => {
         dispatch(load(id))
+        dispatch(loadAppAdmins(id))
     }, [id, dispatch]);
 
     useEffect(() => {
@@ -81,6 +83,14 @@ const AppEdit: FC = function () {
         })
     }
 
+    const addAdmins = (data: { username: string }) => {
+        dispatch(createAppAdminsItem(id, data))
+    }
+    const removeAdmin = (adminId: number) => {
+        dispatch(deleteAppAdminsItem(id, adminId))
+    }
+    const [adminsForm] = Form.useForm()
+
     const colors = ["magenta", "red", "purple", "geekblue", "blue", "cyan", "green"]
     let greenBtnCss = { marginRight: 20, backgroundColor: "#21ba45", color: "white" }
     return (
@@ -116,22 +126,42 @@ const AppEdit: FC = function () {
                 onFinish={addDomain}
                 form={domainForm}
             >
-                <Form.Item label="域名" name="domain">
-                    <Input />
+                <Form.Item name="domain">
+                    <Input placeholder="域名" />
                 </Form.Item>
                 <Form.Item >
                     <Button type="primary" style={greenBtnCss} htmlType="submit">添加</Button>
                     <Button style={{ backgroundColor: "#1890ff", color: "white" }} onClick={OnSave}>保存</Button>
                 </Form.Item>
             </Form>
-
-            <Divider orientation="left">白名单列表</Divider>
-            <div>
+            <div style={{ marginTop: "20px" }}>
                 {allowList.split(",").map((item, idx) => {
                     if (item === "") {
                         return null
                     }
                     return <Tag key={item + "_" + idx} color={colors[idx % colors.length]} closable={true} onClose={() => { removeDomain(idx) }}>{item}</Tag>
+                })}
+            </div>
+
+            <Divider orientation="left"> 管理员<span style={{ fontSize: 12, color: 'red' }}>可以修改应用生成的短链</span></Divider>
+            <Form
+                layout="inline"
+                onFinish={addAdmins}
+                form={adminsForm}
+            >
+                <Form.Item name="username">
+                    <Input placeholder="用户名" />
+                </Form.Item>
+                <Form.Item >
+                    <Button type="primary" style={greenBtnCss} htmlType="submit">添加</Button>
+                </Form.Item>
+            </Form>
+            <div style={{ marginTop: "20px" }}>
+                <Tag key="myself" color="blue">{userInfo.username}</Tag>
+
+                {appAdmins.map((item: any, idx) => {
+
+                    return <Tag key={item.id} color={colors[idx % colors.length]} closable={true} onClose={() => { removeAdmin(item.id) }}>{item.username}</Tag>
                 })}
             </div>
         </>

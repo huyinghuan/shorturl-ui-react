@@ -51,10 +51,10 @@ const AppListComponent: FC = () => {
             }
         },
         {
-            title: '是否单表',
+            title: '分表',
             dataIndex: 'is_single_table',
             key: 'is_single_table',
-            width: 80,
+            width: 60,
             render: (value: boolean, item: any) => {
                 return value ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <CheckCircleOutlined />
             }
@@ -75,7 +75,7 @@ const AppListComponent: FC = () => {
                         to={{
                             pathname: `/home/app/edit/${item.id}`,
                         }}
-                    >编辑</Link>
+                    >管理</Link>
 
                     {/* <Button type="link">删除</Button> */}
                     <Link
