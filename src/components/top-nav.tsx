@@ -1,4 +1,4 @@
-import { Menu, Layout, Typography, Row, Col } from 'antd';
+import { Menu, Layout } from 'antd';
 import { useAppDispatch, useAppSelector } from '@src/hook'
 import { load as loadUserInfo, signOut } from "@store/user"
 import { useEffect, CSSProperties } from 'react';

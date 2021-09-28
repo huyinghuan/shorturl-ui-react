@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Table, notification } from "antd"
+import { Table, notification, Space } from "antd"
 import { Link } from "react-router-dom"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useAppSelector, useAppDispatch } from '@src/hook'
@@ -94,16 +94,19 @@ const ShortListComponent: FC = () => {
             title: '操作',
             dataIndex: 'operate',
             key: 'operate',
-            width: 100,
+            width: 150,
             render: (value: string, item: any) => {
                 const idRaw = item.short.split("/").pop()
-                return (<span>
+                return (<Space>
+                    <Link type="link" target="_blank" to={{
+                        pathname: `/anyone-short/qrcode/${idRaw}`,
+                    }} >二维码</Link>
                     <Link
                         to={{
                             pathname: `/home/anyone-short/edit/${idRaw}`,
                         }}
                     >编辑</Link>
-                </span>)
+                </Space>)
             }
         },
     ];

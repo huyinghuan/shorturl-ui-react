@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { API, resultHandler } from "@src/service"
 import { useParams } from "react-router-dom"
-import { Form, InputNumber, Switch, Input, Button, Col, Row } from "antd"
+import { Form, InputNumber, Switch, Input, Button } from "antd"
 
 const ImportAndGetPage: FC = () => {
     const { id } = useParams<{ id: string }>();
