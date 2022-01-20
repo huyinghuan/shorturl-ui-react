@@ -16,7 +16,7 @@ const QRCodePage: FC = () => {
             <h3 style={{textAlign: "center", marginBottom:"10px"}}>
                 <Link to='/qrcode'> 点我生成自定义二维码</Link>
             </h3>
-            <QRCode data={info.url}/>
+            <QRCode data={info.short}/>
         </div>
     )
 }
