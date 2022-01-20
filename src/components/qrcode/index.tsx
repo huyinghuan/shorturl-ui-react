@@ -43,7 +43,7 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
         }
     });
     const [fileExt, setFileExt] = useState<FileExtension>("png");
-    
+    const [fileName, setFileName] = useState("");
     const [qrCode] = useState<QRCodeStyling>(new QRCodeStyling(options));
     useEffect(() => {
         if (ref.current) {
@@ -133,13 +133,19 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
                                 </Input.Group>
                             </Form.Item>
                             <Form.Item label="Logo">
-                                <Input type="file" onChange={(e)=>{
-                                    if(e.currentTarget.files){
-                                        getBase64(e.currentTarget.files[0]).then(res=>{
-                                            setImage(res as string)
-                                        })
-                                    }
-                                }} />
+                                <Input.Group compact>
+                                <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}>
+                                    <Input type="file" value={fileName} onChange={(e)=>{
+                                        if(e.currentTarget.files){
+                                            getBase64(e.currentTarget.files[0]).then(res=>{
+                                                setImage(res as string)
+                                            })
+                                        }
+                                        setFileName(e.currentTarget.value)
+                                    }} accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                </Form.Item>
+                                <Form.Item><Button onClick={()=>{ setImage("");  setFileName("")}}>清除</Button></Form.Item>
+                                </Input.Group>
                             </Form.Item>
                             <Row>
                                 <Col span={8}>
