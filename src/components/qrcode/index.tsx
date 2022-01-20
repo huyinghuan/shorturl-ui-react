@@ -109,7 +109,7 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
     return (
             <Row>
                 <Col span={14}>
-                <Collapse defaultActiveKey={['1']}>
+                <Collapse defaultActiveKey={['1','2','3']}>
                     <Panel header="基本配置" key="1">
                         <Form>
                             <Form.Item label="大小">
@@ -240,6 +240,9 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
                                     </Select>
                                 </Form.Item>
                             </Form>
+                       </Col>
+                       <Col  style={{ marginTop:"10px"}}>
+                        <span style={{color:"red"}}>注意:!!! 配置越复杂,二维码识别难度越大，生成二维码后请多扫描测试几次!!! </span>
                        </Col>
                    </Row>
                     
