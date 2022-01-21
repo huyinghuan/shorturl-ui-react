@@ -39,26 +39,19 @@ const ColorSettings:FC<{onChange:any, defaultColor:string}> = (props: {onChange:
     )
     const doubeSetting = (
         <>
-            <Form.Item label="渐变方式">
-                <Radio.Group options={[{label:"线性",value:"linear"}, {label:"旋转",value:"radial"}]} 
-                    onChange={(e)=>{setGradientType(e.target.value)}}
-                    value={gradientType} 
-                    optionType="button"
-                    buttonStyle="solid"/>
-            </Form.Item>
             {gradientType !=="radial" ? null :
-                 <Form.Item label="渐变角度">
-                     <Input.Group compact> 
-                        <Form.Item style={{ display: 'inline-block', width: 'calc(40% - 8px)', margin: '0 8px' }}>
-                            <Slider  min={0} max={180} onChange={value => setGradientRotation(value)} value={typeof gradientRotation === 'number' ? gradientRotation : 0}/>
-                        </Form.Item>
-                        <Form.Item>
-                            <InputNumber min={0} max={180} style={{ margin: '0 16px' }} value={gradientRotation} onChange={value => setGradientRotation(value)}/>
-                        </Form.Item>
-                    </Input.Group>
-                 </Form.Item>
+            <Form.Item label="渐变角度" style={{marginBottom: "0px"}}>
+                <Input.Group compact> 
+                    <Form.Item style={{ display: 'inline-block', width: 'calc(40% - 8px)', margin: '0 8px' }}>
+                        <Slider  min={0} max={180} onChange={value => setGradientRotation(value)} value={typeof gradientRotation === 'number' ? gradientRotation : 0}/>
+                    </Form.Item>
+                    <Form.Item>
+                        <InputNumber min={0} max={180} style={{ margin: '0 16px' }} value={gradientRotation} onChange={value => setGradientRotation(value)}/>
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
             }
-            <Form.Item label="起始色">
+            <Form.Item label="起始色" style={{marginBottom: "0px"}}>
                 <Input.Group compact>
                     <Form.Item style={{marginRight: '10px'}}>
                         <InputColor color={starColor} onChange={(value:string) => { setStartColor(value) }}/>
@@ -73,13 +66,30 @@ const ColorSettings:FC<{onChange:any, defaultColor:string}> = (props: {onChange:
 
     return (
         <Form>
-            <Form.Item label="背景色">
-                <Radio.Group options={[{label:"单色",value:true}, {label:"渐变",value:false}]} 
-                    onChange={(e)=>{setIsSingleColor(e.target.value)}}
-                    value={isSingleColor} 
-                    optionType="button"
-                    buttonStyle="solid"/>
-            </Form.Item>
+            <Row>
+                <Col span={6}>
+                    <Form.Item label="背景色">
+                        <Radio.Group options={[{label:"单色",value:true}, {label:"渐变",value:false}]} 
+                            onChange={(e)=>{setIsSingleColor(e.target.value)}}
+                            value={isSingleColor} 
+                            optionType="button"
+                            buttonStyle="solid"/>
+                    </Form.Item>
+                </Col>
+                
+                {isSingleColor ? null : (
+                    <Col span={6}>
+                    <Form.Item label="渐变方式">
+                        <Radio.Group options={[{label:"线性",value:"linear"}, {label:"旋转",value:"radial"}]} 
+                            onChange={(e)=>{setGradientType(e.target.value)}}
+                            value={gradientType} 
+                            optionType="button"
+                            buttonStyle="solid"/>
+                    </Form.Item>
+                    </Col>
+                )}
+                
+            </Row>          
             {isSingleColor ? singleSetting: doubeSetting}
         </Form>
     )
