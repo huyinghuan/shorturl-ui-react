@@ -4,7 +4,7 @@ import { MenuClickEventHandler } from 'rc-menu/lib/interface'
 import { useAppSelector } from '@src/hook';
 import { UserOutlined, LaptopOutlined, CoffeeOutlined, SearchOutlined } from '@ant-design/icons';
 
-import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
+import { useLocation, useHistory, useRouteMatch, Link } from 'react-router-dom';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -53,6 +53,9 @@ export default function LeftSideNav() {
                     <Menu.Item key={`doc/batch-import.md`}>批量导入生成</Menu.Item>
                     <Menu.Item key={`doc/safe.md`}>API安全!必读!</Menu.Item>
                 </SubMenu>
+                <Menu.Item key="qrcode" icon={<SearchOutlined />}>
+                    <Link to='/qrcode' target='qrcode'> 二维码生成工具 </Link>
+                </Menu.Item>
             </Menu>
         </Sider>
     )

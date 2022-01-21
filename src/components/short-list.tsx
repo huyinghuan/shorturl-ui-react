@@ -98,9 +98,9 @@ const ShortListComponent: FC = () => {
             render: (value: string, item: any) => {
                 const idRaw = item.short.split("/").pop()
                 return (<Space>
-                    <Link type="link" target="_blank" to={{
+                    <Link type="link" target="qrcode" to={{
                         pathname: `/anyone-short/qrcode/${idRaw}`,
-                    }} >二维码</Link>
+                    }}  >二维码</Link>
                     <Link
                         to={{
                             pathname: `/home/anyone-short/edit/${idRaw}`,

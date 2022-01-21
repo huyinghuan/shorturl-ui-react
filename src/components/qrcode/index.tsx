@@ -1,7 +1,8 @@
 import { FC, useEffect, useRef, useState, ChangeEvent } from 'react';
-import { Slider, Row, Col, InputNumber, Collapse, Select, Input,Form, Button } from "antd"
+import { Slider, Row, Col, InputNumber, Collapse, Select, Input,Form, Button,Radio } from "antd"
 
 import InputColor from './input-color';
+import ColorSetting from "./color-setting"
 import QRCodeStyling, {
     DotType,
     CornerSquareType,
@@ -18,14 +19,17 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
     const [imageSize, setImageSize] = useState(4) // 图片系数？
     const [imageMargin, setImageMargin] = useState(0)
     const [qrMargin, setQrMargin] = useState(0)
-    const [bgColor, setBgColor] = useState("#FFFFFF")
-    const [dotType, setDotType] = useState("square") // 'rounded' 'dots' 'classy' 'classy-rounded' 'square' 'extra-rounded'
-    const [dotColor, setDotColor] = useState("#000000") // 'dot' 'square' 'extra-rounded'
+    
+    const [bgOptions, setBgOptions] = useState<any>({color: "#FFFFFF"})
 
+    const [dotType, setDotType] = useState("square") // 'rounded' 'dots' 'classy' 'classy-rounded' 'square' 'extra-rounded'
+    const [dotColorOptions, setDotColorOptions] = useState({color:"#000000"}) 
     const [cornerSquareType, setCornerSquareType] = useState("square") // 'dot' 'square' 'extra-rounded'
-    const [cornerSquareColor, setCornerSquareColor] = useState("#000000") // 'dot' 'square' 'extra-rounded'
+    const [cornerSquareColorOptions, setCornerSquareColorOptions] = useState({color:"#000000"}) 
+ 
+
     const [cornerDotType, setCornerDotType] = useState("square") // 'dot' 'square'
-    const [cornerDotColor, setCornerDotColor] = useState("#000000") // 'dot' 'square'
+    const [cornerDotColorOptions, setCornerDotColorOptions] =  useState({color:"#000000"}) 
     const [errorLevel, setErrorLevel] = useState("Q")
 
     const ref = useRef<HTMLDivElement>(null);
@@ -68,26 +72,24 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
                 margin: imageMargin,                
             },
             dotsOptions:{
-                color: dotColor,
+                ...dotColorOptions,
                 type: dotType as DotType,
             },
             cornersSquareOptions:{
-                color: cornerSquareColor,
+                ...cornerSquareColorOptions,
                 type: cornerSquareType as CornerSquareType,
             },
             cornersDotOptions:{
-                color: cornerDotColor,
+                ...cornerDotColorOptions,
                 type: cornerDotType as CornerDotType,
             },
-            backgroundOptions:{
-                color: bgColor,
-            },
+            backgroundOptions: bgOptions,
             qrOptions:{
                 errorCorrectionLevel: errorLevel as "L" | "M" | "Q" | "H",
             },
             data: props.data
         });
-    }, [props.data, size, bgColor, imageSize, imageMargin, qrMargin, dotColor, dotType, cornerSquareColor, cornerSquareType, cornerDotColor, cornerDotType, errorLevel, image])
+    }, [props.data, size, bgOptions, imageSize, imageMargin, qrMargin, dotColorOptions, dotType, cornerSquareColorOptions, cornerSquareType, cornerDotColorOptions, cornerDotType, errorLevel, image])
 
 
     const getBase64 = (file: File) => {
@@ -109,63 +111,35 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
     return (
             <Row>
                 <Col span={14}>
-                <Collapse defaultActiveKey={['1','2','3']}>
+                <Collapse defaultActiveKey={['1','2']}>
                     <Panel header="基本配置" key="1">
                         <Form>
-                            <Form.Item label="大小">
-                                <Input.Group compact> 
-                                    <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}>
-                                        <Slider  min={50} max={512} onChange={value => setSize(value)} value={typeof size === 'number' ? size : 0}/>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <InputNumber min={50} max={512} style={{ margin: '0 16px' }} value={size} onChange={value => setSize(value)}/>
-                                    </Form.Item>
-                                </Input.Group>
-                            </Form.Item>
-                            <Form.Item label="外边距">
-                                <Input.Group compact>
-                                    <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}>
-                                        <Slider  min={0} max={size/2} onChange={value => setQrMargin(value)} value={typeof qrMargin === 'number' ? qrMargin : 0}/>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <InputNumber min={0} max={size/2} style={{ margin: '0 16px' }} value={qrMargin} onChange={value => setQrMargin(value)}/>
-                                    </Form.Item>
-                                </Input.Group>
-                            </Form.Item>
-                            <Form.Item label="Logo">
-                                <Input.Group compact>
-                                <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}>
-                                    <Input type="file" value={fileName} onChange={(e)=>{
-                                        if(e.currentTarget.files){
-                                            getBase64(e.currentTarget.files[0]).then(res=>{
-                                                setImage(res as string)
-                                            })
-                                        }
-                                        setFileName(e.currentTarget.value)
-                                    }} accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
-                                </Form.Item>
-                                <Form.Item><Button onClick={()=>{ setImage("");  setFileName("")}}>清除</Button></Form.Item>
-                                </Input.Group>
-                            </Form.Item>
                             <Row>
-                                <Col span={8}>
-                                    <Form.Item label="logo比例">
-                                        <InputNumber min={0} max={5} value={imageSize} onChange={value => setImageSize(value)}/>
+                                <Col span={9}>
+                                    <Form.Item label="大小">
+                                        <Input.Group compact> 
+                                            <Form.Item style={{ display: 'inline-block', width: 'calc(40% - 8px)', margin: '0 8px' }}>
+                                                <Slider  min={50} max={512} onChange={value => setSize(value)} value={typeof size === 'number' ? size : 0}/>
+                                            </Form.Item>
+                                            <Form.Item>
+                                                <InputNumber min={50} max={512} style={{ margin: '0 16px' }} value={size} onChange={value => setSize(value)}/>
+                                            </Form.Item>
+                                        </Input.Group>
                                     </Form.Item>
                                 </Col>
-                                <Col span={4}>
-                                    <Form.Item label="logo边距">
-                                    <InputNumber min={0} max={5} value={imageMargin} onChange={value => setImageMargin(value)}/>
+                                <Col span={9}>
+                                    <Form.Item label="外边距">
+                                        <Input.Group compact>
+                                            <Form.Item style={{ display: 'inline-block', width: 'calc(40% - 8px)', margin: '0 8px' }}>
+                                                <Slider  min={0} max={size/4} onChange={value => setQrMargin(value)} value={typeof qrMargin === 'number' ? qrMargin : 0}/>
+                                            </Form.Item>
+                                            <Form.Item>
+                                                <InputNumber min={0} max={size/4} style={{ margin: '0 16px' }} value={qrMargin} onChange={value => setQrMargin(value)}/>
+                                            </Form.Item>
+                                        </Input.Group>
                                     </Form.Item>
                                 </Col>
-                            </Row>
-                            <Row>
-                                <Col span={8}>
-                                    <Form.Item label="背景色">
-                                        <InputColor color={bgColor} onChange={(value:string) => { setBgColor(value) }}/>
-                                    </Form.Item>
-                                </Col>
-                                <Col span={12}>
+                                <Col span={6}>
                                     <Form.Item label="纠错级别">
                                         <Select defaultValue={errorLevel} style={{ width: 120 }} onChange={(v)=>{setErrorLevel(v)}}>
                                             <Option value="L">L</Option>
@@ -176,10 +150,44 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
+                           <Row>
+                                <Col span={12}>
+                                    <Form.Item label="Logo">
+                                        <Input.Group compact>
+                                            <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}>
+                                                <Input type="file" value={fileName} onChange={(e)=>{
+                                                    if(e.currentTarget.files){
+                                                        getBase64(e.currentTarget.files[0]).then(res=>{
+                                                            setImage(res as string)
+                                                        })
+                                                    }
+                                                    setFileName(e.currentTarget.value)
+                                                }} accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                            </Form.Item>
+                                            <Form.Item><Button onClick={()=>{ setImage("");  setFileName("")}}>清除</Button></Form.Item>
+                                        </Input.Group>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={4}>
+                                    <Form.Item label="logo比例">
+                                        <InputNumber min={0} max={5} value={imageSize} onChange={value => setImageSize(value)}/>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={4}>
+                                    <Form.Item label="logo边距">
+                                    <InputNumber min={0} max={5} value={imageMargin} onChange={value => setImageMargin(value)}/>
+                                    </Form.Item>
+                                </Col>
+                           </Row>
                         </Form>
                     </Panel>
-                    <Panel header="内部图形" key="2">
-                        <Form layout='inline'>
+                    <Panel header="背景" key="2">
+                        <ColorSetting defaultColor='#FFFFFF' onChange={(options:any)=>{
+                            setBgOptions(options)
+                        }} />
+                    </Panel>
+                    <Panel header="内部图形" key="3">
+                        <Form>
                             <Form.Item label="样式">
                                 <Select defaultValue={dotType} style={{ width: 120 }} onChange={(v)=>{setDotType(v)}}>
                                     <Option value="square">正方形</Option>
@@ -190,36 +198,39 @@ const QRCodeComponents: FC<{data:string}> = (props:{data:string}) => {
                                     <Option value="extra-rounded">样式6</Option>
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="背景色">
-                                <InputColor color={dotColor} onChange={(value:string) => setDotColor(value)}/>
-                            </Form.Item>
                         </Form>
+                        <ColorSetting defaultColor='#000000' onChange={(options:any)=>{
+                            setDotColorOptions(options)
+                        }} />
                     </Panel>
-                    <Panel header="三角定位" key="3">
-                        <Form layout='inline' style={{marginBottom:"10px"}}>
-                            <Form.Item label="外圈样式">
+                    <Panel header="三角定位外圈" key="4">
+                        <Form>
+                            <Form.Item label="样式">
                                 <Select defaultValue={cornerSquareType} style={{ width: 120 }} onChange={(v)=>{setCornerSquareType(v)}}>
                                     <Option value="square">正方形</Option>
                                     <Option value="dot">圆</Option>
                                     <Option value="extra-rounded">圆角正方形</Option>
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="背景色">
-                                <InputColor color={cornerSquareColor} onChange={(value:string) => setCornerSquareColor(value)}/>
-                            </Form.Item>
                         </Form>
-                        <Form layout='inline'>
-                            <Form.Item label="内圈样式">
+                        <ColorSetting defaultColor='#000000' onChange={(options:any)=>{
+                            setCornerSquareColorOptions(options)
+                        }} />
+                    </Panel>
+                    <Panel header="三角定位内圈" key="5">
+                        <Form>
+                            <Form.Item label="样式">
                                 <Select defaultValue={cornerDotType} style={{ width: 120 }} onChange={(v)=>{setCornerDotType(v)}}>
                                     <Option value="square">正方形</Option>
                                     <Option value="dot">圆</Option>
                                 </Select>
                             </Form.Item>
-                            <Form.Item label="背景色">
-                            <InputColor color={cornerDotColor} onChange={(value:string) => setCornerDotColor(value)}/>
-                            </Form.Item>
                         </Form>
+                        <ColorSetting defaultColor='#000000' onChange={(options:any)=>{
+                            setCornerDotColorOptions(options)
+                        }} />
                     </Panel>
+
                 </Collapse>
                 </Col>
                 <Col span={1}></Col>
