@@ -1,0 +1,16 @@
+---
+- name: 部署
+  hosts: shorturl
+  vars:
+    workspace: /www/wwwroot/shorturl/static
+  tasks:
+    - name: 创建运行workspace
+      ansible.builtin.file:
+        path: "{{workspace}}"
+        state: directory
+        mode: "0755"
+    - name: 文件复制
+      copy:
+        src: "build/"
+        dest: "{{workspace}}"
+        mode: 0777
